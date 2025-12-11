@@ -51,9 +51,11 @@ public class FutonBlock extends BedBlock {
         ActionResult result = super.onUse(state, world, pos, player, hand, hit);
 
         if (!world.isClient) {
-            // Model switch if lying down or getting up
-            boolean newOccupied = !state.get(OCCUPIED);
-            world.setBlockState(pos, state.with(OCCUPIED, newOccupied), 3);
+            // if player sleeps
+            if (player.isSleeping()) {
+                BlockState newState = state.with(OCCUPIED, true);
+                world.setBlockState(pos, newState, 3);
+            }
         }
 
         return result;
