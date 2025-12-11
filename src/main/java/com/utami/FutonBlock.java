@@ -2,12 +2,17 @@ package com.utami;
 
 import net.minecraft.block.*;
 import net.minecraft.block.enums.BedPart;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -38,6 +43,20 @@ public class FutonBlock extends BedBlock {
             return List.of();
         }
         return List.of(new ItemStack(this.asItem()));
+    }
+
+    // for bed animation
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ActionResult result = super.onUse(state, world, pos, player, hand, hit);
+
+        if (!world.isClient) {
+            // Model switch if lying down or getting up
+            boolean newOccupied = !state.get(OCCUPIED);
+            world.setBlockState(pos, state.with(OCCUPIED, newOccupied), 3);
+        }
+
+        return result;
     }
 }
 

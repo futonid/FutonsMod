@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "futonsmod",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"name": "Futons Mod",
 	"description": "Adds stylish futon beds that can be placed anywhere in the world.",
 	"authors": [
@@ -32,6 +32,6 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"another-mod": "artisanbedmod"
 	}
 }
